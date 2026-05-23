@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصويت الموسم 11 - دوري المدرب الأفضل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           CSS VARIABLES
+           ============================================================ */
+        :root {
+            --dark-red:       #064733;
+            --green:          #ff7805;
+            --dark-red-light: #40b42f;
+            --green-light:    #fe9c49;
+            --dark-bg:        #0f0f0f;
+            --darker-bg:      #080808;
+            --card-bg:        #1a1a1a;
+            --card-border:    #333333;
+            --text-primary:   #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted:     #888888;
+            --shadow:         0 10px 30px rgba(0,0,0,.5);
+            --shadow-light:   0 5px 15px rgba(0,0,0,.3);
+            --radius:         16px;
+            --radius-sm:      8px;
+            --transition:     all 0.4s cubic-bezier(.4,0,.2,1);
+            --gradient-red:   linear-gradient(135deg,#064733 0%,#40b42f 100%);
+            --gradient-green: linear-gradient(135deg,#ff7805 0%,#fe9c49 100%);
+            --gradient-dark:  linear-gradient(135deg,#1a1a1a 0%,#0f0f0f 100%);
+        }
+
+        /* ============================================================
+           BASE
+           ============================================================ */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+
+        body {
+            font-family:'Cairo',sans-serif;
+            line-height:1.8;
+            color:var(--text-primary);
+            background:var(--dark-bg);
+            overflow-x:hidden;
+        }
+        body[lang="en"] { direction:ltr; }
+
+        .container { width:100%; max-width:1300px; margin:0 auto; padding:0 20px; }
+
+        h1,h2,h3,h4 { font-weight:800; line-height:1.2; margin-bottom:1.2rem; }
+
+        h1 {
+            font-size:3.2rem;
+            background:linear-gradient(90deg,var(--dark-red),var(--green));
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            background-clip:text;
+        }
+        h2 {
+            font-size:2.3rem;
+            position:relative;
+            padding-bottom:14px;
+            display:inline-block;
+        }
+        h2::after {
+            content:'';
+            position:absolute;
+            bottom:0; right:0;
+            width:90px; height:5px;
+            background:var(--gradient-red);
+            border-radius:3px;
+        }
+        body[lang="en"] h2::after { right:auto; left:0; }
+        h3 { font-size:1.6rem; color:var(--green); }
+        p  { color:var(--text-secondary); font-size:1.05rem; margin-bottom:1.2rem; }
+        a  { text-decoration:none; color:inherit; }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        header {
+            background:var(--gradient-dark);
+            position:fixed;
+            top:0; width:100%;
+            z-index:1000;
+            border-bottom:2px solid var(--dark-red);
+            backdrop-filter:blur(10px);
+            box-shadow:var(--shadow);
+        }
+        .header-inner {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:14px 20px;
+            gap:16px;
+        }
+        .logo {
+            display:flex; align-items:center; gap:16px;
+            transition:var(--transition); cursor:pointer;
+        }
+        .logo:hover { transform:scale(1.04); }
+        .logo-icon {
+            width:72px; height:72px;
+            border-radius:50%;
+            background:var(--gradient-red);
+            display:flex; align-items:center; justify-content:center;
+            font-size:2.2rem;
+            box-shadow:0 0 28px rgba(0,255,21,.45);
+            flex-shrink:0;
+        }
+        .logo-text h1 { font-size:1.65rem; margin-bottom:2px; }
+        .logo-text p  { font-size:.85rem; color:var(--text-muted); margin:0; }
+
+        .lang-toggle { display:flex; gap:8px; }
+        .lang-btn {
+            width:46px; height:46px; border-radius:50%;
+            background:var(--card-bg);
+            border:2px solid var(--card-border);
+            color:var(--text-secondary);
+            font-weight:700; font-size:.9rem;
+            cursor:pointer;
+            transition:var(--transition);
+            display:flex; align-items:center; justify-content:center;
+        }
+        .lang-btn:hover    { transform:translateY(-3px); }
+        .lang-btn.active   { background:var(--gradient-red); color:#fff; border-color:var(--dark-red); }
+
+        /* ============================================================
+           HERO BANNER
+           ============================================================ */
+        .hero {
+            background:linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.82)),
+                        url('https://i.ibb.co/9mRF7TZv/NEW-SEASON2.jpg') center/cover no-repeat;
+            min-height:340px;
+            display:flex; align-items:center; justify-content:center;
+            text-align:center;
+            padding:120px 20px 60px;
+            position:relative;
+            overflow:hidden;
+        }
+        .hero::before {
+            content:'';
+            position:absolute; inset:0;
+            background:var(--gradient-red);
+            opacity:.08;
+        }
+        .hero-content { position:relative; z-index:2; max-width:860px; }
+        .hero-badge {
+            background:var(--gradient-red);
+            color:#fff;
+            padding:10px 28px;
+            border-radius:var(--radius-sm);
+            font-weight:700; font-size:1.1rem;
+            display:inline-block;
+            margin-bottom:22px;
+            animation:fadeInDown .6s ease both;
+        }
+        .hero-content h1 {
+            font-size:3rem;
+            animation:fadeInUp .7s .1s ease both;
+            margin-bottom:14px;
+        }
+        .hero-content p {
+            font-size:1.2rem;
+            animation:fadeInUp .7s .2s ease both;
+            margin-bottom:0;
+        }
+
+        /* ============================================================
+           MAIN
+           ============================================================ */
+        main { padding:60px 0 40px; }
+
+        .section-title {
+            display:flex; align-items:center; gap:18px;
+            margin-bottom:40px;
+        }
+        .title-icon {
+            width:56px; height:56px;
+            background:var(--gradient-red);
+            border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            font-size:1.4rem; flex-shrink:0;
+        }
+
+        /* ============================================================
+           CARD BASE
+           ============================================================ */
+        .card {
+            background:var(--gradient-dark);
+            border:2px solid var(--card-border);
+            border-radius:var(--radius);
+            padding:30px;
+            position:relative;
+            overflow:hidden;
+            transition:var(--transition);
+        }
+        .card::before {
+            content:'';
+            position:absolute;
+            top:0; left:0; right:0;
+            height:5px;
+            background:var(--gradient-red);
+        }
+        .card:hover { border-color:var(--dark-red); box-shadow:var(--shadow); }
+
+        /* ============================================================
+           VOTER FORM
+           ============================================================ */
+        .form-wrap {
+            max-width:680px;
+            margin:0 auto 60px;
+        }
+        .form-card {
+            background:var(--gradient-dark);
+            border:2px solid var(--card-border);
+            border-radius:var(--radius);
+            padding:45px 40px;
+            position:relative;
+            overflow:hidden;
+            animation:fadeInUp .6s ease both;
+        }
+        .form-card::before {
+            content:'';
+            position:absolute;
+            top:0; left:0; right:0;
+            height:5px;
+            background:var(--gradient-red);
+        }
+        .form-card h3 {
+            margin-bottom:8px;
+        }
+        .form-card > p {
+            margin-bottom:30px;
+            font-size:1rem;
+        }
+
+        .form-group { margin-bottom:24px; }
+        .form-group label {
+            display:block;
+            font-weight:700;
+            font-size:1rem;
+            margin-bottom:8px;
+            color:var(--text-primary);
+        }
+        .form-group label i { color:var(--green); margin-left:8px; }
+        body[lang="en"] .form-group label i { margin-left:0; margin-right:8px; }
+
+        .form-input {
+            width:100%;
+            background:rgba(255,255,255,.05);
+            border:2px solid var(--card-border);
+            border-radius:var(--radius-sm);
+            padding:14px 18px;
+            color:var(--text-primary);
+            font-family:'Cairo',sans-serif;
+            font-size:1.05rem;
+            transition:var(--transition);
+            outline:none;
+        }
+        .form-input:focus {
+            border-color:var(--dark-red-light);
+            background:rgba(64,180,47,.06);
+            box-shadow:0 0 0 4px rgba(64,180,47,.12);
+        }
+        .form-input::placeholder { color:var(--text-muted); }
+
+        .form-input.error { border-color:#c00; box-shadow:0 0 0 4px rgba(200,0,0,.12); }
+
+        .field-error {
+            color:#ff6b6b;
+            font-size:.9rem;
+            margin-top:6px;
+            display:none;
+        }
+        .field-error.show { display:block; }
+
+        .form-divider {
+            height:2px;
+            background:var(--card-border);
+            border-radius:2px;
+            margin:30px 0;
+        }
+
+        /* ============================================================
+           COACH SELECTION INSIDE FORM
+           ============================================================ */
+        .coaches-select-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
+            gap:14px;
+            margin-top:16px;
+        }
+        .coach-pick-btn {
+            background:var(--gradient-dark);
+            border:2px solid var(--card-border);
+            border-radius:var(--radius);
+            padding:18px 10px;
+            cursor:pointer;
+            text-align:center;
+            font-family:'Cairo',sans-serif;
+            font-weight:700;
+            font-size:.95rem;
+            color:var(--text-secondary);
+            transition:var(--transition);
+            position:relative;
+            overflow:hidden;
+        }
+        .coach-pick-btn::before {
+            content:'';
+            position:absolute;
+            bottom:0; left:0; right:0;
+            height:0;
+            background:var(--gradient-red);
+            transition:var(--transition);
+        }
+        .coach-pick-btn:hover {
+            border-color:var(--dark-red);
+            color:#fff;
+            transform:translateY(-4px);
+        }
+        .coach-pick-btn:hover::before { height:100%; }
+        .coach-pick-btn.selected {
+            background:var(--gradient-red);
+            border-color:var(--dark-red);
+            color:#fff;
+            transform:translateY(-4px);
+            box-shadow:0 8px 20px rgba(0,0,0,.35);
+        }
+        .coach-pick-btn .pick-avatar {
+            width:70px; height:70px;
+            border-radius:50%;
+            object-fit:cover;
+            margin:0 auto 10px;
+            display:block;
+            border:3px solid var(--card-border);
+            transition:var(--transition);
+            position:relative; z-index:1;
+            background:var(--card-bg);
+        }
+        .coach-pick-btn.selected .pick-avatar,
+        .coach-pick-btn:hover .pick-avatar { border-color:var(--green); }
+        .coach-pick-name { position:relative; z-index:1; display:block; line-height:1.3; }
+        .coach-pick-team { position:relative; z-index:1; display:block; font-size:.78rem; color:var(--green); margin-top:4px; }
+        .coach-pick-btn.selected .coach-pick-team { color:#ffe0b0; }
+        .selected-check {
+            position:absolute; top:8px; right:8px;
+            width:22px; height:22px;
+            background:var(--dark-red-light);
+            border-radius:50%;
+            display:none;
+            align-items:center; justify-content:center;
+            font-size:.75rem;
+            z-index:2;
+        }
+        .coach-pick-btn.selected .selected-check { display:flex; }
+
+        /* ============================================================
+           SUBMIT BUTTON
+           ============================================================ */
+        .submit-btn {
+            width:100%;
+            padding:18px 30px;
+            border-radius:var(--radius);
+            background:var(--gradient-red);
+            color:#fff;
+            border:none;
+            cursor:pointer;
+            font-family:'Cairo',sans-serif;
+            font-weight:800;
+            font-size:1.15rem;
+            transition:var(--transition);
+            position:relative; overflow:hidden;
+            display:flex; align-items:center; justify-content:center; gap:12px;
+            margin-top:30px;
+        }
+        .submit-btn::before {
+            content:'';
+            position:absolute; inset:0;
+            background:var(--gradient-green);
+            opacity:0;
+            transition:var(--transition);
+        }
+        .submit-btn:hover { transform:translateY(-4px); box-shadow:0 12px 28px rgba(0,0,0,.4); }
+        .submit-btn:hover::before { opacity:1; }
+        .submit-btn span, .submit-btn i { position:relative; z-index:1; }
+        .submit-btn:disabled { opacity:.65; cursor:not-allowed; transform:none; }
+
+        /* Spinner inside button */
+        .btn-spinner {
+            width:20px; height:20px;
+            border:3px solid rgba(255,255,255,.3);
+            border-top-color:#fff;
+            border-radius:50%;
+            animation:spin .7s linear infinite;
+            display:none;
+        }
+        .submit-btn.loading .btn-spinner { display:block; }
+        .submit-btn.loading .btn-text { opacity:0; }
+
+        /* ============================================================
+           SUCCESS STATE
+           ============================================================ */
+        .success-panel {
+            display:none;
+            text-align:center;
+            padding:50px 30px;
+            animation:fadeInUp .6s ease both;
+        }
+        .success-panel.show { display:block; }
+        .success-icon {
+            width:100px; height:100px;
+            background:var(--gradient-red);
+            border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            font-size:3rem;
+            margin:0 auto 28px;
+            box-shadow:0 0 50px rgba(64,180,47,.35);
+            animation:popIn .5s .1s cubic-bezier(.34,1.56,.64,1) both;
+        }
+        .success-panel h2 { font-size:2rem; margin-bottom:10px; }
+        .success-panel p { font-size:1.1rem; max-width:500px; margin:0 auto 20px; }
+        .voted-coach-badge {
+            display:inline-flex; align-items:center; gap:12px;
+            background:rgba(64,180,47,.15);
+            border:2px solid var(--dark-red-light);
+            border-radius:var(--radius);
+            padding:16px 28px;
+            margin-top:10px;
+            font-weight:700; font-size:1.1rem;
+        }
+        .voted-coach-badge img {
+            width:50px; height:50px;
+            border-radius:50%; object-fit:cover;
+            border:2px solid var(--dark-red-light);
+        }
+
+        /* Already voted state (returning user) */
+        .already-voted-panel {
+            display:none;
+            max-width:680px;
+            margin:0 auto 60px;
+            animation:fadeInUp .6s ease both;
+        }
+        .already-voted-panel.show { display:block; }
+        .already-voted-inner {
+            text-align:center;
+            padding:50px 30px;
+        }
+
+        /* ============================================================
+           TOAST NOTIFICATION
+           ============================================================ */
+        .toast {
+            position:fixed;
+            bottom:36px;
+            left:50%;
+            transform:translateX(-50%) translateY(120px);
+            background:linear-gradient(135deg,#7a0000,#c00000);
+            color:#fff;
+            padding:18px 36px;
+            border-radius:var(--radius);
+            font-size:1.05rem; font-weight:700;
+            box-shadow:0 14px 40px rgba(0,0,0,.5);
+            z-index:9999;
+            transition:transform .5s cubic-bezier(.4,0,.2,1);
+            display:flex; align-items:center; gap:12px;
+            min-width:260px; max-width:90vw;
+            text-align:center;
+        }
+        .toast.success { background:linear-gradient(135deg,#064733,#40b42f); }
+        .toast.show { transform:translateX(-50%) translateY(0); }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            background:var(--gradient-dark);
+            border-top:2px solid var(--dark-red);
+            padding:60px 0 28px;
+            margin-top:80px;
+        }
+        .footer-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+            gap:40px;
+            margin-bottom:40px;
+        }
+        .footer-col h3 { color:var(--green); margin-bottom:20px; font-size:1.3rem; }
+        .footer-col p  { color:var(--text-secondary); margin-bottom:14px; }
+        .social-row { display:flex; gap:12px; margin-top:22px; }
+        .social-row a {
+            width:46px; height:46px;
+            border-radius:50%;
+            background:var(--card-bg);
+            border:2px solid var(--card-border);
+            display:inline-flex; align-items:center; justify-content:center;
+            transition:var(--transition);
+        }
+        .social-row a:hover { background:var(--gradient-red); transform:translateY(-4px); border-color:var(--dark-red); }
+        .copyright {
+            text-align:center;
+            padding-top:24px;
+            border-top:1px solid var(--card-border);
+            color:var(--text-muted);
+            font-size:.88rem;
+        }
+
+        /* ============================================================
+           ANIMATIONS
+           ============================================================ */
+        @keyframes fadeInUp {
+            from { opacity:0; transform:translateY(28px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity:0; transform:translateY(-20px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        @keyframes spin {
+            to { transform:rotate(360deg); }
+        }
+        @keyframes popIn {
+            from { opacity:0; transform:scale(.5); }
+            to   { opacity:1; transform:scale(1); }
+        }
+        @keyframes pulse {
+            0%,100% { box-shadow:0 0 0 0 rgba(64,180,47,.4); }
+            50%      { box-shadow:0 0 0 14px rgba(64,180,47,0); }
+        }
+        .pulse { animation:pulse 2.5s infinite; }
+
+        .animate-in { animation:fadeInUp .6s ease both; }
+
+        /* ============================================================
+           SCROLLBAR
+           ============================================================ */
+        ::-webkit-scrollbar { width:10px; }
+        ::-webkit-scrollbar-track { background:var(--darker-bg); }
+        ::-webkit-scrollbar-thumb { background:var(--gradient-red); border-radius:5px; }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width:768px) {
+            .header-inner { padding:10px 14px; }
+            .logo-icon { width:54px; height:54px; font-size:1.7rem; }
+            .logo-text h1 { font-size:1.25rem; }
+            .logo-text p  { font-size:.78rem; }
+            .hero { min-height:260px; padding:110px 16px 50px; }
+            .hero-content h1 { font-size:2rem; }
+            .hero-content p  { font-size:1rem; }
+            .hero-badge { font-size:.95rem; padding:8px 18px; }
+            main { padding:40px 0 30px; }
+            .form-card { padding:28px 20px; }
+            h2 { font-size:1.8rem; }
+            .coaches-select-grid { grid-template-columns:repeat(3, 1fr); gap:10px; }
+            .coach-pick-btn .pick-avatar { width:55px; height:55px; }
+            .coach-pick-btn { padding:14px 8px; }
+        }
+        @media (max-width:480px) {
+            .coaches-select-grid { grid-template-columns:repeat(2, 1fr); }
+            .form-card { padding:22px 16px; }
+        }
+    </style>
+</head>
+<body lang="ar">
+
+<!-- ================================================================
+     HEADER
+     ================================================================ -->
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="logo-text">
+                <h1>دوري المدرب الأفضل</h1>
+                <p>OSM League · Season 11 · 2026</p>
+            </div>
+        </div>
+        <div class="lang-toggle">
+            <button class="lang-btn active" id="btnAr">AR</button>
+            <button class="lang-btn"        id="btnEn">EN</button>
+        </div>
+    </div>
+</header>
+
+<!-- ================================================================
+     HERO
+     ================================================================ -->
+<div class="hero">
+    <div class="hero-content">
+        <div class="hero-badge" data-ar="الموسم الحادي عشر · التصويت الرسمي" data-en="Season 11 · Official Voting">
+            الموسم الحادي عشر · التصويت الرسمي
+        </div>
+        <h1 data-ar="أفضل مدرب في الموسم 11" data-en="Best Coach of Season 11">
+            أفضل مدرب في الموسم 11
+        </h1>
+        <p data-ar="صوّت للمدرب الذي أبهرك أكثر في هذا الموسم. ادخل بياناتك ثم اختر مدربك المفضل."
+           data-en="Vote for the coach who impressed you most this season. Enter your info, then pick your favourite coach.">
+            صوّت للمدرب الذي أبهرك أكثر في هذا الموسم. ادخل بياناتك ثم اختر مدربك المفضل.
+        </p>
+    </div>
+</div>
+
+<!-- ================================================================
+     MAIN
+     ================================================================ -->
+<main>
+    <div class="container">
+
+        <!-- Already-voted returning user -->
+        <div class="already-voted-panel" id="alreadyVotedPanel">
+            <div class="card already-voted-inner">
+                <div class="success-icon pulse" style="margin-bottom:24px;">
+                    <i class="fas fa-check-double"></i>
+                </div>
+                <h2 data-ar="شكراً! لقد صوّتت مسبقاً" data-en="Thanks! You already voted">
+                    شكراً! لقد صوّتت مسبقاً
+                </h2>
+                <p data-ar="سجّلنا صوتك بالفعل في هذا الموسم. كل مشارك يُسمح له بصوت واحد فقط."
+                   data-en="Your vote for this season is already on record. Each participant may vote only once.">
+                    سجّلنا صوتك بالفعل في هذا الموسم. كل مشارك يُسمح له بصوت واحد فقط.
+                </p>
+                <div class="voted-coach-badge" id="returnBadge" style="margin:0 auto;">
+                    <i class="fas fa-vote-yea" style="color:var(--dark-red-light);font-size:1.6rem;"></i>
+                    <span id="returnBadgeText"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voting form (shown when user hasn't voted) -->
+        <div class="form-wrap" id="formWrap">
+
+            <!-- Step indicator -->
+            <div style="text-align:center; margin-bottom:32px;">
+                <div class="section-title" style="justify-content:center;">
+                    <div class="title-icon"><i class="fas fa-vote-yea"></i></div>
+                    <h2 data-ar="استمارة التصويت" data-en="Voting Form">استمارة التصويت</h2>
+                </div>
+                <p style="margin:0;" data-ar="يُرجى ملء بياناتك أولاً ثم اختيار المدرب الذي تريد التصويت له."
+                   data-en="Please fill in your details first, then select the coach you wish to vote for.">
+                    يُرجى ملء بياناتك أولاً ثم اختيار المدرب الذي تريد التصويت له.
+                </p>
+            </div>
+
+            <div class="form-card" id="mainFormCard">
+
+                <!-- ── Voter Info ── -->
+                <h3 data-ar="بياناتك" data-en="Your Details">بياناتك</h3>
+                <p data-ar="هذه المعلومات تُستخدم للتحقق من عدم تكرار التصويت."
+                   data-en="This information is used to prevent duplicate votes.">
+                    هذه المعلومات تُستخدم للتحقق من عدم تكرار التصويت.
+                </p>
+
+                <div class="form-group">
+                    <label for="voterName">
+                        <i class="fas fa-user"></i>
+                        <span data-ar="الاسم الكامل" data-en="Full Name">الاسم الكامل</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="voterName"
+                        class="form-input"
+                        data-ar-placeholder="أدخل اسمك الكامل"
+                        data-en-placeholder="Enter your full name"
+                        placeholder="أدخل اسمك الكامل"
+                        autocomplete="name"
+                    >
+                    <div class="field-error" id="nameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="voterTeam">
+                        <i class="fas fa-shield-alt"></i>
+                        <span data-ar="اسم فريقك في اللعبة" data-en="Your In-Game Team Name">اسم فريقك في اللعبة</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="voterTeam"
+                        class="form-input"
+                        data-ar-placeholder="أدخل اسم الفريق الذي تدربه"
+                        data-en-placeholder="Enter the team you coach"
+                        placeholder="أدخل اسم الفريق الذي تدربه"
+                        autocomplete="off"
+                    >
+                    <div class="field-error" id="teamError"></div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <!-- ── Coach Selection ── -->
+                <h3 data-ar="اختر المدرب" data-en="Choose a Coach">اختر المدرب</h3>
+                <p data-ar="انقر على المدرب الذي تريد التصويت له. يمكنك التصويت مرة واحدة فقط."
+                   data-en="Click the coach you want to vote for. You can only vote once.">
+                    انقر على المدرب الذي تريد التصويت له. يمكنك التصويت مرة واحدة فقط.
+                </p>
+
+                <div class="coaches-select-grid" id="coachPickGrid">
+                    <!-- Rendered by JS -->
+                </div>
+                <div class="field-error" id="coachError"></div>
+
+                <div class="form-divider"></div>
+
+                <!-- Submit -->
+                <button class="submit-btn" id="submitBtn">
+                    <div class="btn-spinner"></div>
+                    <span class="btn-text">
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-ar="إرسال الصوت" data-en="Submit Vote">إرسال الصوت</span>
+                    </span>
+                </button>
+
+            </div><!-- /form-card -->
+
+            <!-- Success panel (inside form-wrap so it replaces the form) -->
+            <div class="card success-panel" id="successPanel">
+                <div class="success-icon pulse">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2 data-ar="تم تسجيل صوتك!" data-en="Vote Recorded!">تم تسجيل صوتك!</h2>
+                <p data-ar="شكراً على مشاركتك. تم تسجيل اختيارك بنجاح وسيُحسب في النتائج النهائية."
+                   data-en="Thank you for participating. Your choice has been recorded and will count in the final results.">
+                    شكراً على مشاركتك. تم تسجيل اختيارك بنجاح وسيُحسب في النتائج النهائية.
+                </p>
+                <div class="voted-coach-badge" id="successBadge">
+                    <i class="fas fa-star" style="color:gold;font-size:1.5rem;"></i>
+                    <span id="successBadgeText"></span>
+                </div>
+            </div>
+
+        </div><!-- /form-wrap -->
+
+    </div><!-- /container -->
+</main>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 data-ar="دوري المدرب الأفضل" data-en="Best Manager League">دوري المدرب الأفضل</h3>
+                <p data-ar="أبرز بطولة إدارة كرة قدم تنافسية على منصة Online Soccer Manager."
+                   data-en="The premier competitive football management tournament on Online Soccer Manager.">
+                    أبرز بطولة إدارة كرة قدم تنافسية على منصة Online Soccer Manager.
+                </p>
+                <div class="social-row">
+                    <a href="https://www.youtube.com/@11thOSM" target="_blank" title="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3 data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h3>
+                <ul style="list-style:none; font-size:1rem;">
+                    <li style="padding:8px 0; border-bottom:1px solid var(--card-border);">
+                        <a href="https://osmleague.ddns.net/" target="_blank" style="color:var(--text-secondary);" data-ar="الموقع الرسمي للدوري" data-en="Official League Website">الموقع الرسمي للدوري</a>
+                    </li>
+                    <li style="padding:8px 0; border-bottom:1px solid var(--card-border);">
+                        <a href="https://osmleague.ddns.net/docs/match_schedule.pdf" target="_blank" style="color:var(--text-secondary);" data-ar="جدول المباريات" data-en="Match Schedule">جدول المباريات</a>
+                    </li>
+                    <li style="padding:8px 0;">
+                        <a href="https://i.ibb.co/tPPxPBPY/COACHES-LIST-WILDCARDS.jpg" target="_blank" style="color:var(--text-secondary);" data-ar="لائحة مدربي الموسم 11" data-en="Season 11 Coaches List">لائحة مدربي الموسم 11</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3 data-ar="معلومات الاتصال" data-en="Contact">معلومات الاتصال</h3>
+                <p data-ar="للاستفسارات حول البطولة أو التصويت:" data-en="For inquiries about the league or voting:">للاستفسارات حول البطولة أو التصويت:</p>
+                <p><i class="fas fa-globe" style="color:var(--green); margin-left:8px;"></i> osmleague.ddns.net</p>
+                <p><i class="fa-brands fa-youtube" style="color:var(--green); margin-left:8px;"></i> @11thOSM</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p data-ar="© 2026 دوري المدرب الأفضل · جميع الحقوق محفوظة."
+               data-en="© 2026 Best Manager League · All rights reserved.">
+                © 2026 دوري المدرب الأفضل · جميع الحقوق محفوظة.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+    <i class="fas fa-exclamation-circle" id="toastIcon"></i>
+    <span id="toastMsg"></span>
+</div>
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+/* ================================================================
+   ⚙️  CONFIGURATION — Change things here easily
+   ================================================================ */
+
+/**
+ * EMAIL CONFIG
+ * Uses FormSubmit.co (free, no backend needed).
+ * 1. Change VOTE_EMAIL to your address.
+ * 2. On the first submission FormSubmit will send you a verification email.
+ * 3. After confirming, all votes arrive in your inbox automatically.
+ */
+const VOTE_EMAIL = "slimanix2@gmail.com"; // ← CHANGE THIS
+
+/** Set to false to close voting without editing anything else */
+const VOTING_OPEN = true;
+
+/** Season number (shown in email subjects & labels) */
+const SEASON = 11;
+
+/* ================================================================
+   COACHES LIST — Season 11
+   Add / remove / edit coaches here.
+   Fields:
+     id        – unique slug (no spaces, no Arabic)
+     name      – Arabic display name
+     nameEn    – English display name
+     team      – Arabic team name
+     teamEn    – English team name
+     photo     – URL to coach photo (leave "" for emoji fallback)
+     emoji     – fallback icon when no photo
+   ================================================================ */
+const COACHES = [
+    { id:"anis",        name:"أنيس",        nameEn:"Anis",          team:"نوتينغهام فورست",   teamEn:"Nottingham Forest",   photo:"https://i.ibb.co/rGJFyW1p/ANIS.jpg",       emoji:"🏆" },
+    { id:"rajawi",      name:"رجاوي",        nameEn:"Rajawi",        team:"مانشستر سيتي",      teamEn:"Manchester City",     photo:"https://i.ibb.co/JjzHYJsp/RAJAWI.jpg",     emoji:"⭐" },
+    { id:"mohaned",     name:"مهند",         nameEn:"Mohaned",       team:"ليفربول",           teamEn:"Liverpool",           photo:"https://i.ibb.co/22wDwLy/MOHANED.jpg",     emoji:"🔴" },
+    { id:"khaled",      name:"خالد",         nameEn:"Khaled",        team:"نيوكاسل يونايتد",   teamEn:"Newcastle United",    photo:"https://i.ibb.co/4bV3wjZ/KHALED.jpg",      emoji:"⚫" },
+    { id:"carlo",       name:"كارلو",        nameEn:"Carlo",         team:"تشيلسي",            teamEn:"Chelsea",             photo:"https://i.ibb.co/QF5c7fkH/CHARLO.jpg",     emoji:"💙" },
+    { id:"famahaja",    name:"فما حاجة",     nameEn:"Fama Haja",     team:"أرسنال",            teamEn:"Arsenal",             photo:"https://i.ibb.co/Hf3c0QCD/FAMA-7-AJA.jpg", emoji:"🔫" },
+    { id:"muhamadu",    name:"محمدو",        nameEn:"Muhamadu",      team:"مانشستر يونايتد",   teamEn:"Man United",          photo:"https://i.ibb.co/Xf7XKZVd/MUHAMADU.jpg",   emoji:"😈" },
+    { id:"abdellah",    name:"عبدالله",      nameEn:"Abdellah",      team:"توتنهام",           teamEn:"Tottenham",           photo:"https://i.ibb.co/tpY78RgQ/ABDELLAH.jpg",   emoji:"🐓" },
+    { id:"kenan",       name:"كنان",         nameEn:"Kenan",         team:"أستون فيلا",        teamEn:"Aston Villa",         photo:"https://i.ibb.co/xKCcmr1z/KENAN.jpg",      emoji:"🦁" },
+    { id:"amine",       name:"أمين",         nameEn:"Amine",         team:"وست هام",           teamEn:"West Ham",            photo:"https://i.ibb.co/XZmbtbxx/AMINE.jpg",      emoji:"⚒️" },
+    { id:"salaheddine", name:"صلاح الدين",   nameEn:"Salah Eddine",  team:"برايتون",           teamEn:"Brighton",            photo:"https://i.ibb.co/gbtdSdXJ/SALAHEDDINE.jpg",emoji:"🔵" },
+    { id:"rida",        name:"رضا",          nameEn:"Rida",          team:"بورنموث",           teamEn:"Bournemouth",         photo:"https://i.ibb.co/JhCXPHr/RIDA.jpg",        emoji:"🍒" },
+    { id:"mecheri",     name:"مشري",         nameEn:"Mecheri",       team:"إيفرتون",           teamEn:"Everton",             photo:"https://i.ibb.co/0pB9Q78y/MECHERI.jpg",    emoji:"💎" },
+    { id:"siradj",      name:"سراج",         nameEn:"Siradj",        team:"فولهام",            teamEn:"Fulham",              photo:"https://i.ibb.co/bjKKRbbW/SIRADJ.jpg",     emoji:"⚪" },
+    { id:"albager",     name:"الباغر",       nameEn:"Al Bager",      team:"ولفرهامبتون",       teamEn:"Wolverhampton",       photo:"https://i.ibb.co/Z6NJLD2c/ALBAGER.jpg",    emoji:"🐺" },
+];
+
+/* ================================================================
+   STORAGE KEYS
+   ================================================================ */
+const KEY_VOTE    = `osm_s${SEASON}_vote`;       // stores coach id
+const KEY_NAME    = `osm_s${SEASON}_vname`;      // stores voter name (normalized)
+const KEY_TEAM    = `osm_s${SEASON}_vteam`;      // stores voter team (normalized)
+const KEY_FP      = `osm_s${SEASON}_fp`;         // browser fingerprint
+const KEY_NAMES   = `osm_s${SEASON}_names`;      // JSON array of all submitted names
+const KEY_TEAMS   = `osm_s${SEASON}_teams`;      // JSON array of all submitted teams
+
+/* ================================================================
+   UTILITIES
+   ================================================================ */
+function norm(str) {
+    // Normalize for comparison: lowercase, trim, collapse spaces, strip diacritics
+    return str
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        // Arabic normalization
+        .replace(/[أإآٱ]/g, 'ا')
+        .replace(/[ةه]/g, 'ه')
+        .replace(/ى/g, 'ي');
+}
+
+function fingerprint() {
+    const d = [
+        navigator.language,
+        navigator.platform,
+        screen.width + 'x' + screen.height + 'x' + screen.colorDepth,
+        navigator.hardwareConcurrency || 0,
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+        navigator.userAgent.slice(0, 60)
+    ].join('|');
+    let h = 0;
+    for (let i = 0; i < d.length; i++) { h = Math.imul(31, h) + d.charCodeAt(i) | 0; }
+    return Math.abs(h).toString(36);
+}
+
+function getList(key) {
+    try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
+}
+function saveList(key, arr) {
+    localStorage.setItem(key, JSON.stringify(arr));
+}
+
+/* ================================================================
+   DUPLICATE DETECTION
+   Returns { duplicate: bool, reason: string }
+   ================================================================ */
+function checkDuplicate(name, team) {
+    const n = norm(name);
+    const t = norm(team);
+
+    // 1. Fingerprint match
+    if (localStorage.getItem(KEY_FP) === fingerprint()) {
+        return { duplicate: true, reason: 'fp' };
+    }
+    // 2. Already has a vote cookie
+    if (localStorage.getItem(KEY_VOTE)) {
+        return { duplicate: true, reason: 'cookie' };
+    }
+    // 3. Same name already used
+    const names = getList(KEY_NAMES).map(norm);
+    if (names.includes(n)) {
+        return { duplicate: true, reason: 'name' };
+    }
+    // 4. Same team already used
+    const teams = getList(KEY_TEAMS).map(norm);
+    if (teams.includes(t)) {
+        return { duplicate: true, reason: 'team' };
+    }
+    return { duplicate: false };
+}
+
+function hasVoted() {
+    return !!(localStorage.getItem(KEY_VOTE) || localStorage.getItem(KEY_FP) === fingerprint());
+}
+
+function getVotedCoach() {
+    const id = localStorage.getItem(KEY_VOTE);
+    return COACHES.find(c => c.id === id) || null;
+}
+
+function recordVote(name, team, coachId) {
+    localStorage.setItem(KEY_VOTE, coachId);
+    localStorage.setItem(KEY_NAME, name);
+    localStorage.setItem(KEY_TEAM, team);
+    localStorage.setItem(KEY_FP, fingerprint());
+
+    const names = getList(KEY_NAMES);
+    names.push(name);
+    saveList(KEY_NAMES, names);
+
+    const teams = getList(KEY_TEAMS);
+    teams.push(team);
+    saveList(KEY_TEAMS, teams);
+}
+
+/* ================================================================
+   EMAIL via FormSubmit (free service, no backend needed)
+   ================================================================ */
+async function sendEmail(voterName, voterTeam, coach, lang) {
+    if (!VOTE_EMAIL || VOTE_EMAIL === "your-email@example.com") return; // not configured
+
+    const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(VOTE_EMAIL)}`;
+    const now = new Date().toLocaleString('ar-MA', { timeZone: 'Africa/Casablanca' });
+    const body = {
+        _subject: `🗳️ تصويت S${SEASON} — ${coach.nameEn} — OSM League`,
+        _template: "table",
+        season:         `Season ${SEASON}`,
+        voter_name:     voterName,
+        voter_team:     voterTeam,
+        voted_for_ar:   coach.name,
+        voted_for_en:   coach.nameEn,
+        coach_team_ar:  coach.team,
+        coach_team_en:  coach.teamEn,
+        language:       lang === 'ar' ? 'Arabic' : 'English',
+        timestamp:      now
+    };
+    try {
+        await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(body)
+        });
+    } catch(e) { /* non-critical */ }
+}
+
+/* ================================================================
+   LANGUAGE
+   ================================================================ */
+let lang = 'ar';
+
+function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    document.documentElement.dir  = l === 'ar' ? 'rtl' : 'ltr';
+    document.body.lang             = l;
+    document.body.dir              = l === 'ar' ? 'rtl' : 'ltr';
+
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        const v = el.getAttribute('data-' + l);
+        if (v && el.tagName !== 'INPUT') el.textContent = v;
+    });
+    document.querySelectorAll('[data-ar-placeholder]').forEach(el => {
+        el.placeholder = el.getAttribute('data-' + l + '-placeholder') || '';
+    });
+
+    document.getElementById('btnAr').classList.toggle('active', l === 'ar');
+    document.getElementById('btnEn').classList.toggle('active', l === 'en');
+
+    renderPickGrid(); // refresh coach names in grid
+}
+
+/* ================================================================
+   TOAST
+   ================================================================ */
+let toastTimer;
+function showToast(msg, type = 'error') {
+    const el   = document.getElementById('toast');
+    const icon = document.getElementById('toastIcon');
+    document.getElementById('toastMsg').textContent = msg;
+    icon.className = 'fas ' + (type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle');
+    el.className   = 'toast ' + (type === 'success' ? 'success' : '') + ' show';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 4500);
+}
+
+/* ================================================================
+   RENDER — Coach pick grid
+   ================================================================ */
+let selectedCoachId = null;
+
+function renderPickGrid() {
+    const grid = document.getElementById('coachPickGrid');
+    grid.innerHTML = '';
+    COACHES.forEach(coach => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'coach-pick-btn' + (selectedCoachId === coach.id ? ' selected' : '');
+        btn.dataset.id = coach.id;
+
+        const avatarHtml = coach.photo
+            ? `<img class="pick-avatar" src="${coach.photo}" alt="${coach.name}" onerror="this.outerHTML='<span style=\\'font-size:2rem;display:block;margin-bottom:8px;\\'>${coach.emoji}</span>'">`
+            : `<span style="font-size:2rem;display:block;margin-bottom:8px;">${coach.emoji}</span>`;
+
+        btn.innerHTML = `
+            <div class="selected-check"><i class="fas fa-check"></i></div>
+            ${avatarHtml}
+            <span class="coach-pick-name">${lang === 'ar' ? coach.name : coach.nameEn}</span>
+            <span class="coach-pick-team">${lang === 'ar' ? coach.team : coach.teamEn}</span>
+        `;
+        btn.addEventListener('click', () => selectCoach(coach.id));
+        grid.appendChild(btn);
+    });
+}
+
+function selectCoach(id) {
+    selectedCoachId = id;
+    document.querySelectorAll('.coach-pick-btn').forEach(b => {
+        b.classList.toggle('selected', b.dataset.id === id);
+    });
+    // Clear error
+    document.getElementById('coachError').classList.remove('show');
+}
+
+/* ================================================================
+   VALIDATION
+   ================================================================ */
+function validate(name, team, coachId) {
+    let ok = true;
+
+    // Name
+    const nameEl  = document.getElementById('voterName');
+    const nameErr = document.getElementById('nameError');
+    if (!name || name.length < 2) {
+        nameEl.classList.add('error');
+        nameErr.textContent = lang === 'ar' ? 'يرجى إدخال اسمك الكامل (حرفين على الأقل).' : 'Please enter your full name (at least 2 characters).';
+        nameErr.classList.add('show');
+        ok = false;
+    } else {
+        nameEl.classList.remove('error'); nameErr.classList.remove('show');
+    }
+
+    // Team
+    const teamEl  = document.getElementById('voterTeam');
+    const teamErr = document.getElementById('teamError');
+    if (!team || team.length < 2) {
+        teamEl.classList.add('error');
+        teamErr.textContent = lang === 'ar' ? 'يرجى إدخال اسم الفريق (حرفين على الأقل).' : 'Please enter your team name (at least 2 characters).';
+        teamErr.classList.add('show');
+        ok = false;
+    } else {
+        teamEl.classList.remove('error'); teamErr.classList.remove('show');
+    }
+
+    // Coach
+    const coachErr = document.getElementById('coachError');
+    if (!coachId) {
+        coachErr.textContent = lang === 'ar' ? 'يرجى اختيار مدرب للتصويت له.' : 'Please select a coach to vote for.';
+        coachErr.classList.add('show');
+        ok = false;
+    } else {
+        coachErr.classList.remove('show');
+    }
+
+    return ok;
+}
+
+/* ================================================================
+   SUBMIT HANDLER
+   ================================================================ */
+async function handleSubmit() {
+    const name    = document.getElementById('voterName').value.trim();
+    const team    = document.getElementById('voterTeam').value.trim();
+    const coachId = selectedCoachId;
+
+    if (!validate(name, team, coachId)) return;
+
+    // Duplicate check
+    const { duplicate, reason } = checkDuplicate(name, team);
+    if (duplicate) {
+        let msg = '';
+        if (lang === 'ar') {
+            if (reason === 'name')   msg = `الاسم "${name}" تم استخدامه مسبقاً. كل مشارك له صوت واحد فقط.`;
+            else if (reason === 'team') msg = `الفريق "${team}" تم استخدامه مسبقاً. كل مدرب له صوت واحد فقط.`;
+            else msg = 'لقد قمت بالتصويت مسبقاً. يُسمح بصوت واحد فقط لكل مشارك.';
+        } else {
+            if (reason === 'name')   msg = `The name "${name}" was already used. Each participant may vote only once.`;
+            else if (reason === 'team') msg = `The team "${team}" was already used. Each coach may vote only once.`;
+            else msg = 'You have already voted. Only one vote per participant is allowed.';
+        }
+        showToast(msg, 'error');
+        return;
+    }
+
+    if (!VOTING_OPEN) {
+        showToast(lang === 'ar' ? 'التصويت مغلق حالياً.' : 'Voting is currently closed.', 'error');
+        return;
+    }
+
+    const coach = COACHES.find(c => c.id === coachId);
+
+    // Loading state
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    // Send email (non-blocking)
+    sendEmail(name, team, coach, lang);
+
+    // Simulate brief processing (feels real)
+    await new Promise(r => setTimeout(r, 900));
+
+    // Record vote
+    recordVote(name, team, coachId);
+
+    // Show success
+    showSuccess(coach);
+}
+
+/* ================================================================
+   SUCCESS STATE
+   ================================================================ */
+function showSuccess(coach) {
+    document.getElementById('mainFormCard').style.display  = 'none';
+    const panel = document.getElementById('successPanel');
+    panel.classList.add('show');
+
+    const badgeText = lang === 'ar'
+        ? `صوّتك لـ ${coach.name} · ${coach.team}`
+        : `Your vote: ${coach.nameEn} · ${coach.teamEn}`;
+
+    const badgeEl = document.getElementById('successBadge');
+    if (coach.photo) {
+        badgeEl.innerHTML = `<img src="${coach.photo}" alt="${coach.name}" onerror="this.outerHTML='<i class=\\'fas fa-star\\' style=\\'color:gold;font-size:1.5rem;\\'></i>'" style="width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid var(--dark-red-light);"><span>${badgeText}</span>`;
+    } else {
+        badgeEl.innerHTML = `<i class="fas fa-star" style="color:gold;font-size:1.5rem;"></i><span>${badgeText}</span>`;
+    }
+
+    // Apply lang to success panel text
+    panel.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        const v = el.getAttribute('data-' + lang);
+        if (v) el.textContent = v;
+    });
+
+    showToast(lang === 'ar' ? '✅ تم تسجيل صوتك بنجاح!' : '✅ Your vote has been recorded!', 'success');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ================================================================
+   INIT
+   ================================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Check if already voted
+    if (hasVoted()) {
+        document.getElementById('formWrap').style.display = 'none';
+        const panel = document.getElementById('alreadyVotedPanel');
+        panel.classList.add('show');
+
+        const coach = getVotedCoach();
+        if (coach) {
+            const badgeText = lang === 'ar'
+                ? `صوّتك لـ ${coach.name} · ${coach.team}`
+                : `You voted for: ${coach.nameEn} · ${coach.teamEn}`;
+            document.getElementById('returnBadgeText').textContent = badgeText;
+        } else {
+            document.getElementById('returnBadge').style.display = 'none';
+        }
+        return; // Don't render form
+    }
+
+    // Render coach grid
+    renderPickGrid();
+
+    // Submit button
+    document.getElementById('submitBtn').addEventListener('click', handleSubmit);
+
+    // Language buttons
+    document.getElementById('btnAr').addEventListener('click', () => applyLang('ar'));
+    document.getElementById('btnEn').addEventListener('click', () => applyLang('en'));
+
+    // Real-time validation feedback on input blur
+    ['voterName', 'voterTeam'].forEach(id => {
+        const el = document.getElementById(id);
+        el.addEventListener('blur', () => {
+            if (el.value.trim().length > 0) {
+                el.classList.remove('error');
+                document.getElementById(id.replace('voter', '').toLowerCase() + 'Error').classList.remove('show');
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
